@@ -5,13 +5,14 @@ type MenuFullProps = {
   isOpen: boolean
 }
 
-export const Wrapper = styled.menu`
-  ${({ theme }) => css`
+export const Wrapper = styled.menu<MenuFullProps>`
+  ${({ theme, isOpen }) => css`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: ${theme.spacings.small} 0;
     position: relative;
+    z-index: ${isOpen ? theme.layers.menu : `calc(${theme.layers.menu} - 1)`};
   `}
 `
 
@@ -40,7 +41,7 @@ export const MenuGroup = styled.div`
     align-items: center;
 
     > div {
-      margin-left: ${theme.spacings.xxsmall};
+      margin-left: ${theme.spacings.xsmall};
     }
   `}
 `

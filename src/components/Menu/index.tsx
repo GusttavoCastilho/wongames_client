@@ -19,7 +19,7 @@ const Menu = ({ username }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <S.Wrapper>
+    <S.Wrapper isOpen={isOpen}>
       <MediaMatch lessThan="medium">
         <S.IconWrapper onClick={() => setIsOpen(true)}>
           <MenuIcon aria-label="Open Menu" />
@@ -27,7 +27,11 @@ const Menu = ({ username }: MenuProps) => {
       </MediaMatch>
 
       <S.LogoWrapper>
-        <Logo hideOnMobile />
+        <Link href="/" passHref>
+          <a>
+            <Logo hideOnMobile />
+          </a>
+        </Link>
       </S.LogoWrapper>
 
       <MediaMatch greaterThan="medium">
@@ -44,11 +48,13 @@ const Menu = ({ username }: MenuProps) => {
         <S.IconWrapper>
           <ShoppingCartIcon aria-label="Open Shopping Cart" />
         </S.IconWrapper>
-        {!username && (
-          <Link href="/sign-in" passHref>
-            <Button as="a">Sign in</Button>
-          </Link>
-        )}
+        <MediaMatch greaterThan="medium">
+          {!username && (
+            <Link href="/sign-in" passHref>
+              <Button as="a">Sign in</Button>
+            </Link>
+          )}
+        </MediaMatch>
       </S.MenuGroup>
 
       <S.MenuFull aria-hidden={!isOpen} isOpen={isOpen}>
