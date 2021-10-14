@@ -1,13 +1,48 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithTheme } from 'utils/tests/helpers'
 
 import TextContent from '.'
 
-describe('<TextContent />', () => {
-  it('should render the heading', () => {
-    const { container } = render(<TextContent />)
+const props = {
+  title: 'Description',
+  content: `<h1>Content</h1>`
+}
 
-    expect(screen.getByRole('heading', { name: /TextContent/i })).toBeInTheDocument()
+describe('<TextContent />', () => {
+  it('should render the title and content', () => {
+    const { container } = renderWithTheme(<TextContent {...props} />)
+
+    expect(
+      screen.getByRole('heading', { name: /description/i })
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByRole('heading', { name: /content/i })
+    ).toBeInTheDocument()
 
     expect(container.firstChild).toMatchSnapshot()
+  })
+
+  it('should render without title', () => {
+    renderWithTheme(<TextContent content={props.content} />)
+
+    expect(
+      screen.queryByRole('heading', { name: /description/i })
+    ).not.toBeInTheDocument()
+  })
+
+  it('should render the title and content', () => {
+    renderWithTheme(<TextContent {...props} />)
+
+    const wrapper = screen.getByRole('heading', { name: /description/i })
+      .parentElement
+
+    expect(wrapper).toHaveStyle({
+      color: '#FAFAFA'
+    })
+
+    expect(wrapper).toHaveStyleRule('color', '#030517', {
+      media: '(min-width: 768px)'
+    })
   })
 })
