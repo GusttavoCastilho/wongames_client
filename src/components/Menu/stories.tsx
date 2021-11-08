@@ -7,10 +7,15 @@ export default {
 } as Meta
 
 export const Default: Story<MenuProps> = (args) => <Menu {...args} />
+export const Logged: Story<MenuProps> = (args) => <Menu {...args} />
 
 Default.parameters = {
   layout: 'fullscreen',
   backgrounds: {
     default: 'won-dark'
   }
+}
+
+Logged.args = {
+  username: 'Jhon Doe'
 }
